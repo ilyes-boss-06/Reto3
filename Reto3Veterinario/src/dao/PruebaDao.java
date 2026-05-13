@@ -1,5 +1,7 @@
 package dao;
 
 public class PruebaDao {
-
+	public static void main(String[] args) {
+		System.out.println("Hola mundo");
+	}
 }
