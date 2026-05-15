@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +16,35 @@ public class LineaFacturaDAO implements GenericDAO<LineaFactura>{
 
 	@Override
 	public boolean insertar(LineaFactura objeto) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		String sql = "INSERT INTO ...";
+	    try (Connection con = ConexionBD.getConnection();
+	         PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+	          ps.setXX(1, objeto.getCampo1());
+	          int filas = ps.executeUpdate();
+	          if (filas > 0) {
+	                ResultSet rs = ps.getGeneratedKeys();
+	                if (rs.next()) {
+	                    objeto.setId(rs.getInt(1));
+	                }
+	                return true;
+	            }
+	      } catch (SQLException e) {
+	            System.out.println("Error al insertar: " + e.getMessage());
+	      }
+	        return false;
+	    }
 
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	public List<LineaFactura> obtenerTodos() {
 		List<LineaFactura> lista = new ArrayList<LineaFactura>();
@@ -34,10 +60,6 @@ public class LineaFacturaDAO implements GenericDAO<LineaFactura>{
 		    } catch (SQLException e) {
 		            System.out.println("Error: " + e.getMessage());
 		    }
-
-	
-		   
-
 		
 		
 		return null;
@@ -54,14 +76,36 @@ public class LineaFacturaDAO implements GenericDAO<LineaFactura>{
 
 	@Override
 	public boolean actualizar(LineaFactura objeto) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		
+		String sql = "UPDATE linea_factura set fecha = ? where id = ? ";
+		   try (Connection con = ConexionBD.getConnection();
+		        PreparedStatement ps = con.prepareStatement(sql)) {
+		          ps.setObject(1, objeto.getFecha());
+		          ps.setInt(2, objeto.getIdLineaFactura());
+		          
+		    return ps.executeUpdate() > 0;
+		    } catch (SQLException e) {
+		            System.out.println("Error: " + e.getMessage());
+		    }
+		   return false;
+		    
+}
+		  
+
+	
 
 	@Override
 	public boolean eliminar(int id) {
-		// TODO Auto-generated method stub
-		return false;
+		String sql = "DELETE FROM linea_factura WHERE id = ? ";
+		   try (Connection con = ConexionBD.getConnection();
+		        PreparedStatement ps = con.prepareStatement(sql)) {
+		          ps.setInt(1,id);
+		          
+		    return ps.executeUpdate() > 0;
+		    } catch (SQLException e) {
+		            System.out.println("Error: " + e.getMessage());
+		    }
+		   return false;
 	}
 	
 
