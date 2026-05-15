@@ -1,10 +1,15 @@
 package modelo;
 
-public class Veterinario extends Persona {
+import java.io.Serializable;
 
+public class Veterinario extends Persona {
+	
+	private static final long serialVersionUID = 1L;
+	
 	private int idVeterinario;
 	private int idPersona;
 	private String numColegiado;
+	
 	public Veterinario(int idPersona, String dni, String nombre, int idVeterinario, int idPersona2,
 			String numColegiado) {
 		super(idPersona, dni, nombre);
@@ -12,11 +17,13 @@ public class Veterinario extends Persona {
 		idPersona = idPersona2;
 		this.numColegiado = numColegiado;
 	}
+	
 	public Veterinario(int idPersona, String dni, String nombre, int idPersona2, String numColegiado) {
 		super(idPersona, dni, nombre);
 		idPersona = idPersona2;
 		this.numColegiado = numColegiado;
 	}
+	
 	public Veterinario() {
 		super();
 	}
