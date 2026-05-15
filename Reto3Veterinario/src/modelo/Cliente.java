@@ -1,7 +1,8 @@
 package modelo;
 
 public class Cliente extends Persona {
-
+	private static final long serialVersionUID = 1L;
+	
 	private int idCliente;
 	private int idPersona;
 	private String tenefono;
@@ -16,8 +17,8 @@ public class Cliente extends Persona {
 		idPersona = idPersona2;
 		this.tenefono = tenefono;
 	}
-	public Cliente(int idPersona, String dni, String nombre) {
-		super(idPersona, dni, nombre);
+	public Cliente() {
+		super();
 	}
 	public int getIdCliente() {
 		return idCliente;
