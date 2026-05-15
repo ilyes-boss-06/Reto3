@@ -17,8 +17,8 @@ public class Veterinario extends Persona {
 		idPersona = idPersona2;
 		this.numColegiado = numColegiado;
 	}
-	public Veterinario(int idPersona, String dni, String nombre) {
-		super(idPersona, dni, nombre);
+	public Veterinario() {
+		super();
 	}
 	public int getIdVeterinario() {
 		return idVeterinario;

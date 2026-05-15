@@ -21,7 +21,7 @@ public class VeterinarioDAO implements GenericDAO<Veterinario>{
 	@Override
 	public List<Veterinario> obtenerTodos() {
 		List<Veterinario> editorial = new ArrayList<>();
-        String sql = "select id, nombre, ciudad from editorial;";
+        String sql = "select id, idPersona, numColegiado from Veterinario;";
 
             try (Connection conn = ConexionBD.getConnection();
                     PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -40,7 +40,9 @@ public class VeterinarioDAO implements GenericDAO<Veterinario>{
 	private Veterinario mapearFila(ResultSet rs) throws SQLException {
         Veterinario d = new Veterinario();
 
-        d.
+        d.setIdVeterinario(rs.getInt("idVeterinario"));
+        d.setIdPersona(rs.getInt("idPersona"));
+        d.setNumColegiado(rs.getString("numColegiado"));
 
         return d;
 
