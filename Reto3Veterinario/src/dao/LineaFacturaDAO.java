@@ -16,22 +16,16 @@ public class LineaFacturaDAO implements GenericDAO<LineaFactura>{
 
 	@Override
 	public boolean insertar(LineaFactura objeto) {
-		String sql = "INSERT INTO ...";
-	    try (Connection con = ConexionBD.getConnection();
-	         PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-	          ps.setXX(1, objeto.getCampo1());
-	          int filas = ps.executeUpdate();
-	          if (filas > 0) {
-	                ResultSet rs = ps.getGeneratedKeys();
-	                if (rs.next()) {
-	                    objeto.setId(rs.getInt(1));
-	                }
-	                return true;
-	            }
-	      } catch (SQLException e) {
-	            System.out.println("Error al insertar: " + e.getMessage());
-	      }
-	        return false;
+		String sql = "INSERT INTO linea_factura (idfactura) values (?)";
+		   try (Connection con = ConexionBD.getConnection();
+		        PreparedStatement ps = con.prepareStatement(sql)) {
+		          ps.setInt(1,objeto.getIdLineaFactura());
+		          
+		    return ps.executeUpdate() > 0;
+		    } catch (SQLException e) {
+		            System.out.println("Error: " + e.getMessage());
+		    }
+		   return false;
 	    }
 
 
@@ -70,8 +64,26 @@ public class LineaFacturaDAO implements GenericDAO<LineaFactura>{
 
 	@Override
 	public LineaFactura obtenerPorId(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		List<LineaFactura> lista = new ArrayList<LineaFactura>();
+		String sql = "...";
+		   try (Connection con = ConexionBD.getConnection();
+		        PreparedStatement ps = con.prepareStatement(sql)) {
+			   
+		          ps.setInt(1, id);
+
+		     ResultSet rs = ps.executeQuery();
+		     
+		    if (rs.next()) {
+		          return mapear(rs);
+		    }
+		    
+		   
+		    } catch (SQLException e) {
+		            System.out.println("Error: " + e.getMessage());
+		    }
+		   return null;
+
+		 
 	}
 
 	@Override
