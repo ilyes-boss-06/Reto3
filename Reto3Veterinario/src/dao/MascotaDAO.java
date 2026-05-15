@@ -152,17 +152,19 @@ public class MascotaDAO implements GenericDAO<Mascota> {
     }
 
     /**
-     * Convierte una fila del ResultSet en un objeto Mascota.
+     * Convierte una fila de la base de datos en un objeto Mascota.
+     * @param rs El ResultSet en la posición actual.
+     * @return El objeto Mascota montado.
+     * @throws SQLException Si hay error al leer la base de datos.
      */
-    
     private Mascota mapear(ResultSet rs) throws SQLException {
-        return new Mascota(
-            rs.getInt("id_mascota"),
-            rs.getInt("id_cliente"),
-            rs.getString("nombre"),
-            rs.getString("especie"),
-            rs.getDate("fecha_nacimiento").toLocalDate(),
-            rs.getDouble("peso")
-        );
+        Mascota m = new Mascota();
+        m.setIdMascota(rs.getInt("id_mascota"));
+        m.setIdCliente(rs.getInt("id_cliente"));
+        m.setNombre(rs.getString("nombre"));
+        m.setEspecie(rs.getString("especie"));
+        m.setFechaNacimiento(rs.getDate("fecha_nacimiento").toLocalDate());
+        m.setPeso(rs.getDouble("peso"));
+        return m;
     }
 }
