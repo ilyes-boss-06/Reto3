@@ -27,11 +27,20 @@ public class MascotaDAO implements GenericDAO<Mascota> {
             ps.setString(3, m.getEspecie());
             ps.setObject(4, m.getFechaNacimiento());
             ps.setDouble(5, m.getPeso());
-            return ps.executeUpdate() > 0;
+            int filas = ps.executeUpdate();
+            if (filas > 0) {
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    m.setIdMascota(rs.getInt(1));
+                }
+                return true;
+            }
+
         } catch (SQLException e) {
             System.out.println("Error al insertar mascota: " + e.getMessage());
             return false;
         }
+		return false;
     }
 
     /**
