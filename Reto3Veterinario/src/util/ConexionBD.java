@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConexionBD {
-	private static final String URL = "jdbc:mysql://localhost:3306/dam_programacion";
+	private static final String URL = "jdbc:mysql://localhost:3306/prog_veterinaria";
 	private static final String USER = "dam";
 	private static final String PASS = "1234";
 
