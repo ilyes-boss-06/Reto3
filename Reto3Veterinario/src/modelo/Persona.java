@@ -5,17 +5,31 @@ public class Persona {
 	private int idPersona;
 	private String dni;
 	private String nombre;
+	/**
+	 * Constructor con todos los campos.
+	 * @param idPersona identificador de la persona
+	 * @param dni DNI de la persona
+	 * @param nombre nombre completo de la persona
+	 */
 	public Persona(int idPersona, String dni, String nombre) {
 		super();
 		this.idPersona = idPersona;
 		this.dni = dni;
 		this.nombre = nombre;
 	}
+	/**
+	 * Constructor sin id (para INSERT).
+	 * @param dni DNI de la persona
+	 * @param nombre nombre completo de la persona
+	 */
 	public Persona(String dni, String nombre) {
 		super();
 		this.dni = dni;
 		this.nombre = nombre;
 	}
+	/**
+	 * Constructor vacío.
+	 */
 	public Persona() {
 		super();
 	}

@@ -10,6 +10,14 @@ public class Veterinario extends Persona {
 	private int idPersona;
 	private String numColegiado;
 	
+	/**
+	 * Constructor con todos los campos.
+	 * @param idVeterinario identificador del veterinario
+	 * @param idPersona identificador de la persona asociada
+	 * @param dni DNI del veterinario
+	 * @param nombre nombre completo del veterinario
+	 * @param numColegiado número de colegiado
+	 */
 	public Veterinario(int idPersona, String dni, String nombre, int idVeterinario, int idPersona2,
 			String numColegiado) {
 		super(idPersona, dni, nombre);
@@ -17,13 +25,20 @@ public class Veterinario extends Persona {
 		idPersona = idPersona2;
 		this.numColegiado = numColegiado;
 	}
-	
-	public Veterinario(int idPersona, String dni, String nombre, int idPersona2, String numColegiado) {
-		super(idPersona, dni, nombre);
+	/**
+	 * Constructor sin ids (para INSERT).
+	 * @param dni DNI del veterinario
+	 * @param nombre nombre completo del veterinario
+	 * @param numColegiado número de colegiado
+	 */
+	public Veterinario(String dni, String nombre, int idPersona2, String numColegiado) {
+		super(dni, nombre);
 		idPersona = idPersona2;
 		this.numColegiado = numColegiado;
 	}
-	
+	/**
+	 * Constructor vacío.
+	 */
 	public Veterinario() {
 		super();
 	}

@@ -13,6 +13,11 @@ import util.ConexionBD;
 
 public class VeterinarioDAO implements GenericDAO<Veterinario>{
 
+	/**
+	 * Inserta un nuevo veterinario en la tabla veterinarios.
+	 * @param objeto el veterinario a insertar (debe tener idPersona asignado)
+	 * @return true si se insertó correctamente
+	 */
 	@Override
 	public boolean insertar(Veterinario objeto) {
 		String sql = "INSERT INTO veterinarios(id_persona, num_colegiado) VALUES(?,?)";
@@ -36,6 +41,10 @@ public class VeterinarioDAO implements GenericDAO<Veterinario>{
 		}
 	}
 
+	/**
+	 * Obtiene todos los veterinarios con sus datos de persona mediante INNER JOIN.
+	 * @return lista con todos los veterinarios
+	 */
 	@Override
 	public List<Veterinario> obtenerTodos() {
 		List<Veterinario> lista = new ArrayList<>();
@@ -51,6 +60,12 @@ public class VeterinarioDAO implements GenericDAO<Veterinario>{
 		}
 		return lista;
 	}
+	/**
+	 * Convierte una fila del ResultSet en un objeto Veterinario.
+	 * @param rs el ResultSet posicionado en la fila actual
+	 * @return el objeto Veterinario mapeado
+	 * @throws SQLException si ocurre un error de acceso a datos
+	 */
 	private Veterinario mapear(ResultSet rs) throws SQLException {
 		Veterinario v = new Veterinario();
 		v.setIdVeterinario(rs.getInt("id_veterinario"));
@@ -60,6 +75,11 @@ public class VeterinarioDAO implements GenericDAO<Veterinario>{
 		v.setNumColegiado(rs.getString("num_colegiado"));
 		return v;
 	}
+	/**
+	 * Obtiene un veterinario por su id_veterinario.
+	 * @param id el identificador del veterinario
+	 * @return el veterinario encontrado o null si no existe
+	 */
 	@Override
 	public Veterinario obtenerPorId(int id) {
 		String sql = "SELECT v.id_veterinario, p.id_persona, p.dni, p.nombre, v.num_colegiado FROM veterinarios v INNER JOIN personas p ON v.id_persona = p.id_persona WHERE v.id_veterinario = ?";
@@ -77,6 +97,11 @@ public class VeterinarioDAO implements GenericDAO<Veterinario>{
 		return null;
 	}
 
+	/**
+	 * Actualiza el número de colegiado de un veterinario existente.
+	 * @param objeto el veterinario con los datos actualizados
+	 * @return true si se actualizó correctamente
+	 */
 	@Override
 	public boolean actualizar(Veterinario objeto) {
 		String sql = "UPDATE veterinarios SET num_colegiado=? WHERE id_veterinario=?";
@@ -91,6 +116,11 @@ public class VeterinarioDAO implements GenericDAO<Veterinario>{
 		}
 	}
 
+	/**
+	 * Elimina un veterinario por su id_veterinario.
+	 * @param id el identificador del veterinario a eliminar
+	 * @return true si se eliminó correctamente
+	 */
 	@Override
 	public boolean eliminar(int id) {
 		String sql = "DELETE FROM veterinarios WHERE id_veterinario=?";
