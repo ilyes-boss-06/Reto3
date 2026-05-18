@@ -15,6 +15,7 @@ public class HistorialDAO implements GenericDAO<Historial> {
 	 * @param objeto el historial a insertar
 	 * @return true si se insertó correctamente
 	 */
+	
 	@Override
 	public boolean insertar(Historial objeto) {
 		String sql = "INSERT INTO historial(id_mascota, id_tratamiento, id_veterinario, fecha) VALUES(?,?,?,?)";
@@ -44,6 +45,7 @@ public class HistorialDAO implements GenericDAO<Historial> {
 	 * Obtiene todos los registros del historial.
 	 * @return lista con todos los registros
 	 */
+	
 	@Override
 	public List<Historial> obtenerTodos() {
 		List<Historial> lista = new ArrayList<>();
@@ -65,6 +67,7 @@ public class HistorialDAO implements GenericDAO<Historial> {
 	 * @param id el identificador del historial
 	 * @return el registro encontrado o null si no existe
 	 */
+	
 	@Override
 	public Historial obtenerPorId(int id) {
 		String sql = "SELECT * FROM historial WHERE id_historial=?";
@@ -87,6 +90,7 @@ public class HistorialDAO implements GenericDAO<Historial> {
 	 * @param objeto el historial con los datos actualizados
 	 * @return true si se actualizó correctamente
 	 */
+	
 	@Override
 	public boolean actualizar(Historial objeto) {
 		String sql = "UPDATE historial SET id_mascota=?, id_tratamiento=?, id_veterinario=?, fecha=? WHERE id_historial=?";
@@ -109,6 +113,7 @@ public class HistorialDAO implements GenericDAO<Historial> {
 	 * @param id el identificador del historial a eliminar
 	 * @return true si se eliminó correctamente
 	 */
+	
 	@Override
 	public boolean eliminar(int id) {
 		String sql = "DELETE FROM historial WHERE id_historial=?";
@@ -127,6 +132,7 @@ public class HistorialDAO implements GenericDAO<Historial> {
 	 * @param idMascota el identificador de la mascota
 	 * @return lista de registros del historial de esa mascota
 	 */
+	
 	public List<Historial> obtenerPorMascota(int idMascota) {
 		List<Historial> lista = new ArrayList<>();
 		String sql = "SELECT * FROM historial WHERE id_mascota=?";
@@ -149,6 +155,7 @@ public class HistorialDAO implements GenericDAO<Historial> {
 	 * @param idVeterinario el identificador del veterinario
 	 * @return lista de registros del historial de ese veterinario
 	 */
+	
 	public List<Historial> obtenerPorVeterinario(int idVeterinario) {
 		List<Historial> lista = new ArrayList<>();
 		String sql = "SELECT * FROM historial WHERE id_veterinario=?";
@@ -172,6 +179,7 @@ public class HistorialDAO implements GenericDAO<Historial> {
 	 * @param fecha la fecha a buscar
 	 * @return lista de registros del historial en esa fecha
 	 */
+	
 	public List<Historial> obtenerPorMascotaYFecha(int idMascota, LocalDate fecha) {
 		List<Historial> lista = new ArrayList<>();
 		String sql = "SELECT * FROM historial WHERE id_mascota=? AND fecha=?";
@@ -196,6 +204,7 @@ public class HistorialDAO implements GenericDAO<Historial> {
 	 * @param mes el número de mes (1-12)
 	 * @return número de tratamientos en ese mes
 	 */
+	
 	public int contarPorVeterinarioYMes(int idVeterinario, int mes) {
 		String sql = "SELECT COUNT(*) FROM historial WHERE id_veterinario=? AND MONTH(fecha)=?";
 		try (Connection con = ConexionBD.getConnection();
@@ -219,6 +228,7 @@ public class HistorialDAO implements GenericDAO<Historial> {
 	 * @return el objeto Historial mapeado
 	 * @throws SQLException si ocurre un error de acceso a datos
 	 */
+	
 	private Historial mapear(ResultSet rs) throws SQLException {
 		Historial h = new Historial();
 		h.setIdHistorial(rs.getInt("id_historial"));
