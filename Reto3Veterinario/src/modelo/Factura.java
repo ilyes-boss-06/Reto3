@@ -1,98 +1,139 @@
 package modelo;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class Factura {
-private int IdFactura;
-private int IdCliente;
-private int IdVeterinario;
-private int IdMascota;
-private LocalDate fecha;
-private double subtotal;
-private double total_iva;
-private double total;
-public Factura(int idFactura, int idCliente, int idVeterinario, int idMascota, LocalDate fecha, double subtotal,
-		double total_iva, double total) {
-	super();
-	IdFactura = idFactura;
-	IdCliente = idCliente;
-	IdVeterinario = idVeterinario;
-	IdMascota = idMascota;
-	this.fecha = fecha;
-	this.subtotal = subtotal;
-	this.total_iva = total_iva;
-	this.total = total;
-}
-public Factura(int idCliente, int idVeterinario, int idMascota, LocalDate fecha, double subtotal, double total_iva,
-		double total) {
-	super();
-	IdCliente = idCliente;
-	IdVeterinario = idVeterinario;
-	IdMascota = idMascota;
-	this.fecha = fecha;
-	this.subtotal = subtotal;
-	this.total_iva = total_iva;
-	this.total = total;
-}
-public Factura() {
-	super();
-}
-public int getIdFactura() {
-	return IdFactura;
-}
-public void setIdFactura(int idFactura) {
-	IdFactura = idFactura;
-}
-public int getIdCliente() {
-	return IdCliente;
-}
-public void setIdCliente(int idCliente) {
-	IdCliente = idCliente;
-}
-public int getIdVeterinario() {
-	return IdVeterinario;
-}
-public void setIdVeterinario(int idVeterinario) {
-	IdVeterinario = idVeterinario;
-}
-public int getIdMascota() {
-	return IdMascota;
-}
-public void setIdMascota(int idMascota) {
-	IdMascota = idMascota;
-}
-public LocalDate getFecha() {
-	return fecha;
-}
-public void setFecha(LocalDate fecha) {
-	this.fecha = fecha;
-}
-public double getSubtotal() {
-	return subtotal;
-}
-public void setSubtotal(double subtotal) {
-	this.subtotal = subtotal;
-}
-public double getTotal_iva() {
-	return total_iva;
-}
-public void setTotal_iva(double total_iva) {
-	this.total_iva = total_iva;
-}
-public double getTotal() {
-	return total;
-}
-public void setTotal(double total) {
-	this.total = total;
-}
-@Override
-public String toString() {
-	return "Factura [IdFactura=" + IdFactura + ", IdCliente=" + IdCliente + ", IdVeterinario=" + IdVeterinario
-			+ ", IdMascota=" + IdMascota + ", fecha=" + fecha + ", subtotal=" + subtotal + ", total_iva=" + total_iva
-			+ ", total=" + total + "]";
-}
+public class Factura implements Serializable {
+	private static final long serialVersionUID = 1L;
 
+	private int idFactura;
+	private int idCliente;
+	private int idVeterinario;
+	private int idMascota;
+	private LocalDate fecha;
+	private BigDecimal subtotal;
+	private BigDecimal totalIva;
+	private BigDecimal total;
 
-	
-	
+	/**
+	 * Constructor vacío.
+	 */
+	public Factura() {
+	}
+
+	/**
+	 * Constructor con todos los campos.
+	 * @param idFactura identificador de la factura
+	 * @param idCliente identificador del cliente
+	 * @param idVeterinario identificador del veterinario
+	 * @param idMascota identificador de la mascota
+	 * @param fecha fecha de la factura
+	 * @param subtotal subtotal sin IVA
+	 * @param totalIva importe del IVA
+	 * @param total total con IVA
+	 */
+	public Factura(int idFactura, int idCliente, int idVeterinario, int idMascota,
+			LocalDate fecha, BigDecimal subtotal, BigDecimal totalIva, BigDecimal total) {
+		this.idFactura = idFactura;
+		this.idCliente = idCliente;
+		this.idVeterinario = idVeterinario;
+		this.idMascota = idMascota;
+		this.fecha = fecha;
+		this.subtotal = subtotal;
+		this.totalIva = totalIva;
+		this.total = total;
+	}
+
+	/**
+	 * Constructor sin id (para INSERT).
+	 * @param idCliente identificador del cliente
+	 * @param idVeterinario identificador del veterinario
+	 * @param idMascota identificador de la mascota
+	 * @param fecha fecha de la factura
+	 * @param subtotal subtotal sin IVA
+	 * @param totalIva importe del IVA
+	 * @param total total con IVA
+	 */
+	public Factura(int idCliente, int idVeterinario, int idMascota,
+			LocalDate fecha, BigDecimal subtotal, BigDecimal totalIva, BigDecimal total) {
+		this.idCliente = idCliente;
+		this.idVeterinario = idVeterinario;
+		this.idMascota = idMascota;
+		this.fecha = fecha;
+		this.subtotal = subtotal;
+		this.totalIva = totalIva;
+		this.total = total;
+	}
+
+	public int getIdFactura() {
+		return idFactura;
+	}
+
+	public void setIdFactura(int idFactura) {
+		this.idFactura = idFactura;
+	}
+
+	public int getIdCliente() {
+		return idCliente;
+	}
+
+	public void setIdCliente(int idCliente) {
+		this.idCliente = idCliente;
+	}
+
+	public int getIdVeterinario() {
+		return idVeterinario;
+	}
+
+	public void setIdVeterinario(int idVeterinario) {
+		this.idVeterinario = idVeterinario;
+	}
+
+	public int getIdMascota() {
+		return idMascota;
+	}
+
+	public void setIdMascota(int idMascota) {
+		this.idMascota = idMascota;
+	}
+
+	public LocalDate getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(LocalDate fecha) {
+		this.fecha = fecha;
+	}
+
+	public BigDecimal getSubtotal() {
+		return subtotal;
+	}
+
+	public void setSubtotal(BigDecimal subtotal) {
+		this.subtotal = subtotal;
+	}
+
+	public BigDecimal getTotalIva() {
+		return totalIva;
+	}
+
+	public void setTotalIva(BigDecimal totalIva) {
+		this.totalIva = totalIva;
+	}
+
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	public void setTotal(BigDecimal total) {
+		this.total = total;
+	}
+
+	@Override
+	public String toString() {
+		return "Factura{idFactura=" + idFactura + ", idCliente=" + idCliente + ", idVeterinario="
+				+ idVeterinario + ", idMascota=" + idMascota + ", fecha=" + fecha + ", subtotal="
+				+ subtotal + ", totalIva=" + totalIva + ", total=" + total + "}";
+	}
 }
