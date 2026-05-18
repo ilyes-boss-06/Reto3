@@ -1,15 +1,20 @@
 package modelo;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class Mascota {
-	protected int idMascota;
-	protected int idCliente;
-	protected String nombre;
-	protected String especie;
-	protected LocalDate fechaNacimiento;
-	protected double peso;
-	
+public class Mascota implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	private int idMascota;
+	private int idCliente;
+	private String nombre;
+	private String especie;
+	private LocalDate fechaNacimiento;
+	private BigDecimal peso;
+
+
 	/**
 	 * Constructor con todos los campos.
 	 * @param idMascota identificador de la mascota
@@ -20,9 +25,8 @@ public class Mascota {
 	 * @param peso peso en kg
 	 */
 	
-	public Mascota(int idMascota, int idCliente, String nombre, String especie, LocalDate fechaNacimiento,
-			double peso) {
-		super();
+	public Mascota(int idMascota, int idCliente, String nombre, String especie,
+			LocalDate fechaNacimiento, BigDecimal peso) {
 		this.idMascota = idMascota;
 		this.idCliente = idCliente;
 		this.nombre = nombre;
@@ -40,8 +44,8 @@ public class Mascota {
 	 * @param peso peso en kg
 	 */
 	
-	public Mascota(int idCliente, String nombre, String especie, LocalDate fechaNacimiento, double peso) {
-		super();
+	public Mascota(int idCliente, String nombre, String especie,
+			LocalDate fechaNacimiento, BigDecimal peso) {
 		this.idCliente = idCliente;
 		this.nombre = nombre;
 		this.especie = especie;
@@ -54,9 +58,8 @@ public class Mascota {
 	 */
 	
 	public Mascota() {
-		super();
 	}
-
+	
 	public int getIdMascota() {
 		return idMascota;
 	}
@@ -97,18 +100,17 @@ public class Mascota {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
-	public double getPeso() {
+	public BigDecimal getPeso() {
 		return peso;
 	}
 
-	public void setPeso(double peso) {
+	public void setPeso(BigDecimal peso) {
 		this.peso = peso;
 	}
 
 	@Override
 	public String toString() {
-		return "Mascota [idMascota=" + idMascota + ", idCliente=" + idCliente + ", nombre=" + nombre + ", especie="
-				+ especie + ", fechaNacimiento=" + fechaNacimiento + ", peso=" + peso + "]";
+		return "Mascota{idMascota=" + idMascota + ", idCliente=" + idCliente + ", nombre='" + nombre
+				+ "', especie='" + especie + "', fechaNacimiento=" + fechaNacimiento + ", peso=" + peso + "}";
 	}
-	
 }
