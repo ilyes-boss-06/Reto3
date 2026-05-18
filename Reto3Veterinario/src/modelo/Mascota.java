@@ -10,6 +10,16 @@ public class Mascota {
 	protected LocalDate fechaNacimiento;
 	protected double peso;
 	
+	/**
+	 * Constructor con todos los campos.
+	 * @param idMascota identificador de la mascota
+	 * @param idCliente identificador del cliente dueño
+	 * @param nombre nombre de la mascota
+	 * @param especie especie de la mascota
+	 * @param fechaNacimiento fecha de nacimiento
+	 * @param peso peso en kg
+	 */
+	
 	public Mascota(int idMascota, int idCliente, String nombre, String especie, LocalDate fechaNacimiento,
 			double peso) {
 		super();
@@ -21,6 +31,15 @@ public class Mascota {
 		this.peso = peso;
 	}
 
+	/**
+	 * Constructor sin id (para INSERT).
+	 * @param idCliente identificador del cliente dueño
+	 * @param nombre nombre de la mascota
+	 * @param especie especie de la mascota
+	 * @param fechaNacimiento fecha de nacimiento
+	 * @param peso peso en kg
+	 */
+	
 	public Mascota(int idCliente, String nombre, String especie, LocalDate fechaNacimiento, double peso) {
 		super();
 		this.idCliente = idCliente;
@@ -29,7 +48,11 @@ public class Mascota {
 		this.fechaNacimiento = fechaNacimiento;
 		this.peso = peso;
 	}
-
+	
+	/**
+	 * Constructor vacío.
+	 */
+	
 	public Mascota() {
 		super();
 	}

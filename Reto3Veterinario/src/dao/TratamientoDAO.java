@@ -61,7 +61,7 @@ public class TratamientoDAO implements GenericDAO<Tratamiento> {
 
 	@Override
 	public boolean actualizar(Tratamiento objeto) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
