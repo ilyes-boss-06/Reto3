@@ -9,6 +9,15 @@ public class Historial {
 	protected int idVeterinario;
 	protected LocalDate fecha;
 	
+	/**
+	 * Constructor con todos los campos.
+	 * @param idHistorial identificador del historial
+	 * @param idMascota identificador de la mascota
+	 * @param idTratamiento identificador del tratamiento
+	 * @param idVeterinario identificador del veterinario
+	 * @param fecha fecha del tratamiento
+	 */
+	
 	public Historial(int idHistorial, int idMascota, int idTratamiento, int idVeterinario, LocalDate fecha) {
 		super();
 		this.idHistorial = idHistorial;
@@ -17,7 +26,15 @@ public class Historial {
 		this.idVeterinario = idVeterinario;
 		this.fecha = fecha;
 	}
-
+	
+	/**
+	 * Constructor sin id (para INSERT).
+	 * @param idMascota identificador de la mascota
+	 * @param idTratamiento identificador del tratamiento
+	 * @param idVeterinario identificador del veterinario
+	 * @param fecha fecha del tratamiento
+	 */
+	
 	public Historial(int idMascota, int idTratamiento, int idVeterinario, LocalDate fecha) {
 		super();
 		this.idMascota = idMascota;
@@ -25,7 +42,11 @@ public class Historial {
 		this.idVeterinario = idVeterinario;
 		this.fecha = fecha;
 	}
-
+	
+	/**
+	 * Constructor vacío.
+	 */
+	
 	public Historial() {
 		super();
 	}
