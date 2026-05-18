@@ -1,10 +1,15 @@
 package modelo;
 
-public class Tratamiento {
-	protected int idTratamiento;
-	protected String nombre;
-	protected double precio;
-	
+import java.io.Serializable;
+import java.math.BigDecimal;
+
+public class Tratamiento implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	private int idTratamiento;
+	private String nombre;
+	private BigDecimal precio;
+
 	/**
 	 * Constructor con todos los campos.
 	 * @param idTratamiento identificador del tratamiento
@@ -12,8 +17,7 @@ public class Tratamiento {
 	 * @param precio precio del tratamiento
 	 */
 	
-	public Tratamiento(int idTratamiento, String nombre, double precio) {
-		super();
+	public Tratamiento(int idTratamiento, String nombre, BigDecimal precio) {
 		this.idTratamiento = idTratamiento;
 		this.nombre = nombre;
 		this.precio = precio;
@@ -25,8 +29,7 @@ public class Tratamiento {
 	 * @param precio precio del tratamiento
 	 */
 	
-	public Tratamiento(String nombre, double precio) {
-		super();
+	public Tratamiento(String nombre, BigDecimal precio) {
 		this.nombre = nombre;
 		this.precio = precio;
 	}
@@ -36,13 +39,12 @@ public class Tratamiento {
 	 */
 	
 	public Tratamiento() {
-		super();
 	}
-
+	
 	public int getIdTratamiento() {
 		return idTratamiento;
 	}
-
+	
 	public void setIdTratamiento(int idTratamiento) {
 		this.idTratamiento = idTratamiento;
 	}
@@ -55,18 +57,17 @@ public class Tratamiento {
 		this.nombre = nombre;
 	}
 
-	public double getPrecio() {
+	public BigDecimal getPrecio() {
 		return precio;
 	}
 
-	public void setPrecio(double precio) {
+	public void setPrecio(BigDecimal precio) {
 		this.precio = precio;
 	}
 
 	@Override
 	public String toString() {
-		return "Tratamiento [idTratamiento=" + idTratamiento + ", nombre=" + nombre + ", precio=" + precio + "]";
+		return "Tratamiento{idTratamiento=" + idTratamiento + ", nombre='" + nombre + "', precio=" + precio + "}";
 	}
-	
-	
 }
+
