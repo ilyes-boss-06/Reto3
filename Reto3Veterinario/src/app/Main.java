@@ -1,11 +1,15 @@
 package app;
 
+import java.util.Scanner;
 
 public class Main {
 
 	public static void main(String[] args) {
 		
-		System.out.println("Hola mundo");
+		Scanner sc = new Scanner (System.in);
+		
+		Main3.ejercicio5(sc);
+		Main3.ejercicio6();
 
 	}
 
