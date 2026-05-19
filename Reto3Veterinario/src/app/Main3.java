@@ -17,9 +17,6 @@ public class Main3 {
 	static FacturaDAO facturaDAO = new FacturaDAO();
 	static LineaFacturaDAO lineaFacturaDAO = new LineaFacturaDAO();
 
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		ejercicio17(sc);	}
 	
 	// 5. Selecciona un cliente y muestra sus datos, mascotas y facturas
 	public static void ejercicio5(Scanner sc) {
