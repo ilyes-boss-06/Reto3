@@ -1,8 +1,6 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 
 public class Mascota implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -11,22 +9,23 @@ public class Mascota implements Serializable {
 	private int idCliente;
 	private String nombre;
 	private String especie;
-	private LocalDate fechaNacimiento;
-	private BigDecimal peso;
+	private String fechaNacimiento;
+	private double peso;
 
+	public Mascota() {
+	}
 
 	/**
 	 * Constructor con todos los campos.
-	 * @param idMascota identificador de la mascota
-	 * @param idCliente identificador del cliente dueño
-	 * @param nombre nombre de la mascota
-	 * @param especie especie de la mascota
+	 * 
+	 * @param idMascota       identificador de la mascota
+	 * @param idCliente       identificador del cliente
+	 * @param nombre          nombre de la mascota
+	 * @param especie         especie
 	 * @param fechaNacimiento fecha de nacimiento
-	 * @param peso peso en kg
+	 * @param peso            peso en kg
 	 */
-	
-	public Mascota(int idMascota, int idCliente, String nombre, String especie,
-			LocalDate fechaNacimiento, BigDecimal peso) {
+	public Mascota(int idMascota, int idCliente, String nombre, String especie, String fechaNacimiento, double peso) {
 		this.idMascota = idMascota;
 		this.idCliente = idCliente;
 		this.nombre = nombre;
@@ -36,30 +35,22 @@ public class Mascota implements Serializable {
 	}
 
 	/**
-	 * Constructor sin id (para INSERT).
-	 * @param idCliente identificador del cliente dueño
-	 * @param nombre nombre de la mascota
-	 * @param especie especie de la mascota
+	 * Constructor sin id.
+	 * 
+	 * @param idCliente       identificador del cliente
+	 * @param nombre          nombre de la mascota
+	 * @param especie         especie
 	 * @param fechaNacimiento fecha de nacimiento
-	 * @param peso peso en kg
+	 * @param peso            peso en kg
 	 */
-	
-	public Mascota(int idCliente, String nombre, String especie,
-			LocalDate fechaNacimiento, BigDecimal peso) {
+	public Mascota(int idCliente, String nombre, String especie, String fechaNacimiento, double peso) {
 		this.idCliente = idCliente;
 		this.nombre = nombre;
 		this.especie = especie;
 		this.fechaNacimiento = fechaNacimiento;
 		this.peso = peso;
 	}
-	
-	/**
-	 * Constructor vacío.
-	 */
-	
-	public Mascota() {
-	}
-	
+
 	public int getIdMascota() {
 		return idMascota;
 	}
@@ -92,25 +83,25 @@ public class Mascota implements Serializable {
 		this.especie = especie;
 	}
 
-	public LocalDate getFechaNacimiento() {
+	public String getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(LocalDate fechaNacimiento) {
+	public void setFechaNacimiento(String fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
-	public BigDecimal getPeso() {
+	public double getPeso() {
 		return peso;
 	}
 
-	public void setPeso(BigDecimal peso) {
+	public void setPeso(double peso) {
 		this.peso = peso;
 	}
 
 	@Override
 	public String toString() {
-		return "Mascota{idMascota=" + idMascota + ", idCliente=" + idCliente + ", nombre='" + nombre
-				+ "', especie='" + especie + "', fechaNacimiento=" + fechaNacimiento + ", peso=" + peso + "}";
+		return "Mascota{idMascota=" + idMascota + ", idCliente=" + idCliente + ", nombre='" + nombre + "', especie='"
+				+ especie + "', fechaNacimiento='" + fechaNacimiento + "', peso=" + peso + "}";
 	}
 }

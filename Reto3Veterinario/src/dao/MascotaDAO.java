@@ -4,37 +4,27 @@ import modelo.Mascota;
 import util.ConexionBD;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MascotaDAO implements GenericDAO<Mascota> {
 
 	/**
-	 * Inserta una nueva mascota en la base de datos.
+	 * Inserta una nueva mascota.
 	 * @param objeto la mascota a insertar
-	 * @return true si se insertó correctamente
+	 * @return true si se inserto correctamente
 	 */
+
 	@Override
 	public boolean insertar(Mascota objeto) {
 		String sql = "INSERT INTO mascotas(id_cliente, nombre, especie, fecha_nacimiento, peso) VALUES(?,?,?,?,?)";
-		try (Connection con = ConexionBD.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+		try (Connection con = ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, objeto.getIdCliente());
 			ps.setString(2, objeto.getNombre());
 			ps.setString(3, objeto.getEspecie());
-			ps.setObject(4, objeto.getFechaNacimiento());
-			ps.setBigDecimal(5, objeto.getPeso());
-			int filas = ps.executeUpdate();
-			if (filas > 0) {
-				try (ResultSet rs = ps.getGeneratedKeys()) {
-					if (rs.next()) {
-						objeto.setIdMascota(rs.getInt(1));
-						return true;
-					}
-				}
-			}
-			return false;
+			ps.setString(4, objeto.getFechaNacimiento());
+			ps.setDouble(5, objeto.getPeso());
+			return ps.executeUpdate() > 0;
 		} catch (SQLException e) {
 			System.out.println("Error insertando mascota: " + e.getMessage());
 			return false;
@@ -42,9 +32,10 @@ public class MascotaDAO implements GenericDAO<Mascota> {
 	}
 
 	/**
-	 * Obtiene todas las mascotas de la base de datos.
-	 * @return lista con todas las mascotas
+	 * Obtiene todas las mascotas.
+	 * @return lista de mascotas
 	 */
+
 	@Override
 	public List<Mascota> obtenerTodos() {
 		List<Mascota> lista = new ArrayList<>();
@@ -63,14 +54,14 @@ public class MascotaDAO implements GenericDAO<Mascota> {
 
 	/**
 	 * Obtiene una mascota por su id.
-	 * @param id el identificador de la mascota
-	 * @return la mascota encontrada o null si no existe
+	 * @param id identificador de la mascota
+	 * @return la mascota o null
 	 */
+
 	@Override
 	public Mascota obtenerPorId(int id) {
 		String sql = "SELECT * FROM mascotas WHERE id_mascota=?";
-		try (Connection con = ConexionBD.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, id);
 			try (ResultSet rs = ps.executeQuery()) {
 				if (rs.next()) {
@@ -84,20 +75,20 @@ public class MascotaDAO implements GenericDAO<Mascota> {
 	}
 
 	/**
-	 * Actualiza los datos de una mascota existente.
-	 * @param objeto la mascota con los datos actualizados
-	 * @return true si se actualizó correctamente
+	 * Actualiza una mascota.
+	 * @param objeto la mascota con datos actualizados
+	 * @return true si se actualizo
 	 */
+
 	@Override
 	public boolean actualizar(Mascota objeto) {
 		String sql = "UPDATE mascotas SET id_cliente=?, nombre=?, especie=?, fecha_nacimiento=?, peso=? WHERE id_mascota=?";
-		try (Connection con = ConexionBD.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, objeto.getIdCliente());
 			ps.setString(2, objeto.getNombre());
 			ps.setString(3, objeto.getEspecie());
-			ps.setObject(4, objeto.getFechaNacimiento());
-			ps.setBigDecimal(5, objeto.getPeso());
+			ps.setString(4, objeto.getFechaNacimiento());
+			ps.setDouble(5, objeto.getPeso());
 			ps.setInt(6, objeto.getIdMascota());
 			return ps.executeUpdate() > 0;
 		} catch (SQLException e) {
@@ -108,14 +99,14 @@ public class MascotaDAO implements GenericDAO<Mascota> {
 
 	/**
 	 * Elimina una mascota por su id.
-	 * @param id el identificador de la mascota a eliminar
-	 * @return true si se eliminó correctamente
+	 * @param id identificador de la mascota
+	 * @return true si se elimino
 	 */
+
 	@Override
 	public boolean eliminar(int id) {
 		String sql = "DELETE FROM mascotas WHERE id_mascota=?";
-		try (Connection con = ConexionBD.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, id);
 			return ps.executeUpdate() > 0;
 		} catch (SQLException e) {
@@ -125,15 +116,15 @@ public class MascotaDAO implements GenericDAO<Mascota> {
 	}
 
 	/**
-	 * Obtiene las mascotas de un cliente dado su id.
-	 * @param idCliente el identificador del cliente
+	 * Obtiene las mascotas de un cliente.
+	 * @param idCliente identificador del cliente
 	 * @return lista de mascotas del cliente
 	 */
+
 	public List<Mascota> obtenerPorCliente(int idCliente) {
 		List<Mascota> lista = new ArrayList<>();
 		String sql = "SELECT * FROM mascotas WHERE id_cliente=?";
-		try (Connection con = ConexionBD.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idCliente);
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
@@ -147,14 +138,14 @@ public class MascotaDAO implements GenericDAO<Mascota> {
 	}
 
 	/**
-	 * Comprueba si una mascota tiene facturas asociadas.
-	 * @param idMascota el identificador de la mascota
-	 * @return true si tiene facturas asociadas
+	 * Comprueba si una mascota tiene facturas asociadas. 
+	 * @param idMascota identificador de la mascota
+	 * @return true si tiene facturas
 	 */
+
 	public boolean tieneFacturas(int idMascota) {
 		String sql = "SELECT COUNT(*) FROM facturas WHERE id_mascota=?";
-		try (Connection con = ConexionBD.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idMascota);
 			try (ResultSet rs = ps.executeQuery()) {
 				if (rs.next()) {
@@ -168,19 +159,13 @@ public class MascotaDAO implements GenericDAO<Mascota> {
 	}
 
 	/**
-	 * Convierte una fila del ResultSet en un objeto Mascota.
-	 * @param rs el ResultSet posicionado en la fila actual
-	 * @return el objeto Mascota mapeado
-	 * @throws SQLException si ocurre un error de acceso a datos
+	 * Mapea un ResultSet a un objeto Mascota.
+	 * @param rs el ResultSet
+	 * @return la Mascota mapeada
 	 */
+
 	private Mascota mapear(ResultSet rs) throws SQLException {
-		Mascota m = new Mascota();
-		m.setIdMascota(rs.getInt("id_mascota"));
-		m.setIdCliente(rs.getInt("id_cliente"));
-		m.setNombre(rs.getString("nombre"));
-		m.setEspecie(rs.getString("especie"));
-		m.setFechaNacimiento(rs.getObject("fecha_nacimiento", LocalDate.class));
-		m.setPeso(rs.getBigDecimal("peso"));
-		return m;
+		return new Mascota(rs.getInt("id_mascota"), rs.getInt("id_cliente"), rs.getString("nombre"),
+				rs.getString("especie"), rs.getString("fecha_nacimiento"), rs.getDouble("peso"));
 	}
 }

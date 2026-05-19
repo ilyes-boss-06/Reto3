@@ -10,28 +10,18 @@ import java.util.List;
 public class TratamientoDAO implements GenericDAO<Tratamiento> {
 
 	/**
-	 * Inserta un nuevo tratamiento en la base de datos.
+	 * Inserta un nuevo tratamiento.
+	 * 
 	 * @param objeto el tratamiento a insertar
-	 * @return true si se insertó correctamente
+	 * @return true si se inserto correctamente
 	 */
-	
 	@Override
 	public boolean insertar(Tratamiento objeto) {
 		String sql = "INSERT INTO tratamientos(nombre, precio) VALUES(?,?)";
-		try (Connection con = ConexionBD.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+		try (Connection con = ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, objeto.getNombre());
-			ps.setBigDecimal(2, objeto.getPrecio());
-			int filas = ps.executeUpdate();
-			if (filas > 0) {
-				try (ResultSet rs = ps.getGeneratedKeys()) {
-					if (rs.next()) {
-						objeto.setIdTratamiento(rs.getInt(1));
-						return true;
-					}
-				}
-			}
-			return false;
+			ps.setDouble(2, objeto.getPrecio());
+			return ps.executeUpdate() > 0;
 		} catch (SQLException e) {
 			System.out.println("Error insertando tratamiento: " + e.getMessage());
 			return false;
@@ -39,10 +29,10 @@ public class TratamientoDAO implements GenericDAO<Tratamiento> {
 	}
 
 	/**
-	 * Obtiene todos los tratamientos de la base de datos.
-	 * @return lista con todos los tratamientos
+	 * Obtiene todos los tratamientos.
+	 * 
+	 * @return lista de tratamientos
 	 */
-	
 	@Override
 	public List<Tratamiento> obtenerTodos() {
 		List<Tratamiento> lista = new ArrayList<>();
@@ -61,15 +51,14 @@ public class TratamientoDAO implements GenericDAO<Tratamiento> {
 
 	/**
 	 * Obtiene un tratamiento por su id.
-	 * @param id el identificador del tratamiento
-	 * @return el tratamiento encontrado o null si no existe
+	 * 
+	 * @param id identificador del tratamiento
+	 * @return el tratamiento o null
 	 */
-	
 	@Override
 	public Tratamiento obtenerPorId(int id) {
 		String sql = "SELECT * FROM tratamientos WHERE id_tratamiento=?";
-		try (Connection con = ConexionBD.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, id);
 			try (ResultSet rs = ps.executeQuery()) {
 				if (rs.next()) {
@@ -83,18 +72,17 @@ public class TratamientoDAO implements GenericDAO<Tratamiento> {
 	}
 
 	/**
-	 * Actualiza los datos de un tratamiento existente.
-	 * @param objeto el tratamiento con los datos actualizados
-	 * @return true si se actualizó correctamente
+	 * Actualiza un tratamiento.
+	 * 
+	 * @param objeto el tratamiento con datos actualizados
+	 * @return true si se actualizo
 	 */
-	
 	@Override
 	public boolean actualizar(Tratamiento objeto) {
 		String sql = "UPDATE tratamientos SET nombre=?, precio=? WHERE id_tratamiento=?";
-		try (Connection con = ConexionBD.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, objeto.getNombre());
-			ps.setBigDecimal(2, objeto.getPrecio());
+			ps.setDouble(2, objeto.getPrecio());
 			ps.setInt(3, objeto.getIdTratamiento());
 			return ps.executeUpdate() > 0;
 		} catch (SQLException e) {
@@ -105,15 +93,14 @@ public class TratamientoDAO implements GenericDAO<Tratamiento> {
 
 	/**
 	 * Elimina un tratamiento por su id.
-	 * @param id el identificador del tratamiento a eliminar
-	 * @return true si se eliminó correctamente
+	 * 
+	 * @param id identificador del tratamiento
+	 * @return true si se elimino
 	 */
-	
 	@Override
 	public boolean eliminar(int id) {
 		String sql = "DELETE FROM tratamientos WHERE id_tratamiento=?";
-		try (Connection con = ConexionBD.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, id);
 			return ps.executeUpdate() > 0;
 		} catch (SQLException e) {
@@ -123,15 +110,14 @@ public class TratamientoDAO implements GenericDAO<Tratamiento> {
 	}
 
 	/**
-	 * Cuenta cuántas veces aparece un tratamiento en el historial.
-	 * @param idTratamiento el identificador del tratamiento
-	 * @return número de apariciones en el historial
+	 * Cuenta cuantas veces aparece un tratamiento en el historial.
+	 * 
+	 * @param idTratamiento identificador del tratamiento
+	 * @return numero de apariciones
 	 */
-	
 	public int contarEnHistorial(int idTratamiento) {
 		String sql = "SELECT COUNT(*) FROM historial WHERE id_tratamiento=?";
-		try (Connection con = ConexionBD.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idTratamiento);
 			try (ResultSet rs = ps.executeQuery()) {
 				if (rs.next()) {
@@ -145,17 +131,12 @@ public class TratamientoDAO implements GenericDAO<Tratamiento> {
 	}
 
 	/**
-	 * Convierte una fila del ResultSet en un objeto Tratamiento.
-	 * @param rs el ResultSet posicionado en la fila actual
-	 * @return el objeto Tratamiento mapeado
-	 * @throws SQLException si ocurre un error de acceso a datos
+	 * Mapea un ResultSet a un objeto Tratamiento.
+	 * 
+	 * @param rs el ResultSet
+	 * @return el Tratamiento mapeado
 	 */
-	
 	private Tratamiento mapear(ResultSet rs) throws SQLException {
-		Tratamiento t = new Tratamiento();
-		t.setIdTratamiento(rs.getInt("id_tratamiento"));
-		t.setNombre(rs.getString("nombre"));
-		t.setPrecio(rs.getBigDecimal("precio"));
-		return t;
+		return new Tratamiento(rs.getInt("id_tratamiento"), rs.getString("nombre"), rs.getDouble("precio"));
 	}
 }

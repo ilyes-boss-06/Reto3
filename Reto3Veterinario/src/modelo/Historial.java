@@ -1,54 +1,49 @@
 package modelo;
 
-import java.time.LocalDate;
+import java.io.Serializable;
 
-public class Historial {
+public class Historial implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	protected int idHistorial;
 	protected int idMascota;
 	protected int idTratamiento;
 	protected int idVeterinario;
-	protected LocalDate fecha;
-	
+	protected String fecha;
+
+	public Historial() {
+	}
+
 	/**
 	 * Constructor con todos los campos.
-	 * @param idHistorial identificador del historial
-	 * @param idMascota identificador de la mascota
+	 * 
+	 * @param idHistorial   identificador del historial
+	 * @param idMascota     identificador de la mascota
 	 * @param idTratamiento identificador del tratamiento
 	 * @param idVeterinario identificador del veterinario
-	 * @param fecha fecha del tratamiento
+	 * @param fecha         fecha del tratamiento
 	 */
-	
-	public Historial(int idHistorial, int idMascota, int idTratamiento, int idVeterinario, LocalDate fecha) {
-		super();
+	public Historial(int idHistorial, int idMascota, int idTratamiento, int idVeterinario, String fecha) {
 		this.idHistorial = idHistorial;
 		this.idMascota = idMascota;
 		this.idTratamiento = idTratamiento;
 		this.idVeterinario = idVeterinario;
 		this.fecha = fecha;
 	}
-	
+
 	/**
-	 * Constructor sin id (para INSERT).
-	 * @param idMascota identificador de la mascota
+	 * Constructor sin id.
+	 * 
+	 * @param idMascota     identificador de la mascota
 	 * @param idTratamiento identificador del tratamiento
 	 * @param idVeterinario identificador del veterinario
-	 * @param fecha fecha del tratamiento
+	 * @param fecha         fecha del tratamiento
 	 */
-	
-	public Historial(int idMascota, int idTratamiento, int idVeterinario, LocalDate fecha) {
-		super();
+	public Historial(int idMascota, int idTratamiento, int idVeterinario, String fecha) {
 		this.idMascota = idMascota;
 		this.idTratamiento = idTratamiento;
 		this.idVeterinario = idVeterinario;
 		this.fecha = fecha;
-	}
-	
-	/**
-	 * Constructor vacío.
-	 */
-	
-	public Historial() {
-		super();
 	}
 
 	public int getIdHistorial() {
@@ -83,17 +78,17 @@ public class Historial {
 		this.idVeterinario = idVeterinario;
 	}
 
-	public LocalDate getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(LocalDate fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 
 	@Override
 	public String toString() {
-		return "Historial [idHistorial=" + idHistorial + ", idMascota=" + idMascota + ", idTratamiento=" + idTratamiento
-				+ ", idVeterinario=" + idVeterinario + ", fecha=" + fecha + "]";
-	}	
+		return "Historial{idHistorial=" + idHistorial + ", idMascota=" + idMascota + ", idTratamiento=" + idTratamiento
+				+ ", idVeterinario=" + idVeterinario + ", fecha='" + fecha + "'}";
+	}
 }

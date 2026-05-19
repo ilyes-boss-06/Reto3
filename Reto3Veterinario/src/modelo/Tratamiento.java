@@ -1,50 +1,45 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 public class Tratamiento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int idTratamiento;
 	private String nombre;
-	private BigDecimal precio;
+	private double precio;
+
+	public Tratamiento() {
+	}
 
 	/**
 	 * Constructor con todos los campos.
+	 * 
 	 * @param idTratamiento identificador del tratamiento
-	 * @param nombre nombre del tratamiento
-	 * @param precio precio del tratamiento
+	 * @param nombre        nombre del tratamiento
+	 * @param precio        precio del tratamiento
 	 */
-	
-	public Tratamiento(int idTratamiento, String nombre, BigDecimal precio) {
+	public Tratamiento(int idTratamiento, String nombre, double precio) {
 		this.idTratamiento = idTratamiento;
 		this.nombre = nombre;
 		this.precio = precio;
 	}
 
 	/**
-	 * Constructor sin id (para INSERT).
+	 * Constructor sin id.
+	 * 
 	 * @param nombre nombre del tratamiento
 	 * @param precio precio del tratamiento
 	 */
-	
-	public Tratamiento(String nombre, BigDecimal precio) {
+	public Tratamiento(String nombre, double precio) {
 		this.nombre = nombre;
 		this.precio = precio;
 	}
-	
-	/**
-	 * Constructor vacío.
-	 */
-	
-	public Tratamiento() {
-	}
-	
+
 	public int getIdTratamiento() {
 		return idTratamiento;
 	}
-	
+
 	public void setIdTratamiento(int idTratamiento) {
 		this.idTratamiento = idTratamiento;
 	}
@@ -57,11 +52,11 @@ public class Tratamiento implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public BigDecimal getPrecio() {
+	public double getPrecio() {
 		return precio;
 	}
 
-	public void setPrecio(BigDecimal precio) {
+	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
 
@@ -70,4 +65,3 @@ public class Tratamiento implements Serializable {
 		return "Tratamiento{idTratamiento=" + idTratamiento + ", nombre='" + nombre + "', precio=" + precio + "}";
 	}
 }
-
