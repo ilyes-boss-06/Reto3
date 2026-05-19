@@ -8,8 +8,13 @@ public class Main {
 		
 		Scanner sc = new Scanner (System.in);
 		
+<<<<<<< HEAD
 		Main1.ejercicio1();
 		Main1.ejercicio2(sc);
+=======
+		Main3.ejercicio5(sc);
+		Main3.ejercicio6();
+>>>>>>> branch 'main' of https://github.com/ilyes-boss-06/Reto3.git
 
 	}
 

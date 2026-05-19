@@ -3,18 +3,17 @@ package dao;
 import modelo.Factura;
 import util.ConexionBD;
 
-import java.math.BigDecimal;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FacturaDAO implements GenericDAO<Factura> {
 
 	/**
-	 * Inserta una nueva factura en la base de datos.
+	 * Inserta una nueva factura.
+	 * 
 	 * @param objeto la factura a insertar
-	 * @return true si se insertó correctamente
+	 * @return true si se inserto correctamente
 	 */
 	@Override
 	public boolean insertar(Factura objeto) {
@@ -25,18 +24,17 @@ public class FacturaDAO implements GenericDAO<Factura> {
 			ps.setInt(1, objeto.getIdCliente());
 			ps.setInt(2, objeto.getIdVeterinario());
 			ps.setInt(3, objeto.getIdMascota());
-			ps.setObject(4, objeto.getFecha());
-			ps.setBigDecimal(5, objeto.getSubtotal());
-			ps.setBigDecimal(6, objeto.getTotalIva());
-			ps.setBigDecimal(7, objeto.getTotal());
+			ps.setString(4, objeto.getFecha());
+			ps.setDouble(5, objeto.getSubtotal());
+			ps.setDouble(6, objeto.getTotalIva());
+			ps.setDouble(7, objeto.getTotal());
 			int filas = ps.executeUpdate();
 			if (filas > 0) {
-				try (ResultSet rs = ps.getGeneratedKeys()) {
-					if (rs.next()) {
-						objeto.setIdFactura(rs.getInt(1));
-						return true;
-					}
+				ResultSet rs = ps.getGeneratedKeys();
+				if (rs.next()) {
+					objeto.setIdFactura(rs.getInt(1));
 				}
+				return true;
 			}
 			return false;
 		} catch (SQLException e) {
@@ -46,8 +44,9 @@ public class FacturaDAO implements GenericDAO<Factura> {
 	}
 
 	/**
-	 * Obtiene todas las facturas de la base de datos.
-	 * @return lista con todas las facturas
+	 * Obtiene todas las facturas.
+	 * 
+	 * @return lista de facturas
 	 */
 	@Override
 	public List<Factura> obtenerTodos() {
@@ -67,14 +66,14 @@ public class FacturaDAO implements GenericDAO<Factura> {
 
 	/**
 	 * Obtiene una factura por su id.
-	 * @param id el identificador de la factura
-	 * @return la factura encontrada o null si no existe
+	 * 
+	 * @param id identificador de la factura
+	 * @return la factura o null
 	 */
 	@Override
 	public Factura obtenerPorId(int id) {
 		String sql = "SELECT * FROM facturas WHERE id_factura=?";
-		try (Connection con = ConexionBD.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, id);
 			try (ResultSet rs = ps.executeQuery()) {
 				if (rs.next()) {
@@ -88,23 +87,23 @@ public class FacturaDAO implements GenericDAO<Factura> {
 	}
 
 	/**
-	 * Actualiza los datos de una factura existente.
-	 * @param objeto la factura con los datos actualizados
-	 * @return true si se actualizó correctamente
+	 * Actualiza una factura.
+	 * 
+	 * @param objeto la factura con datos actualizados
+	 * @return true si se actualizo
 	 */
 	@Override
 	public boolean actualizar(Factura objeto) {
 		String sql = "UPDATE facturas SET id_cliente=?, id_veterinario=?, id_mascota=?, fecha=?, "
 				+ "subtotal=?, total_iva=?, total=? WHERE id_factura=?";
-		try (Connection con = ConexionBD.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, objeto.getIdCliente());
 			ps.setInt(2, objeto.getIdVeterinario());
 			ps.setInt(3, objeto.getIdMascota());
-			ps.setObject(4, objeto.getFecha());
-			ps.setBigDecimal(5, objeto.getSubtotal());
-			ps.setBigDecimal(6, objeto.getTotalIva());
-			ps.setBigDecimal(7, objeto.getTotal());
+			ps.setString(4, objeto.getFecha());
+			ps.setDouble(5, objeto.getSubtotal());
+			ps.setDouble(6, objeto.getTotalIva());
+			ps.setDouble(7, objeto.getTotal());
 			ps.setInt(8, objeto.getIdFactura());
 			return ps.executeUpdate() > 0;
 		} catch (SQLException e) {
@@ -115,14 +114,14 @@ public class FacturaDAO implements GenericDAO<Factura> {
 
 	/**
 	 * Elimina una factura por su id.
-	 * @param id el identificador de la factura a eliminar
-	 * @return true si se eliminó correctamente
+	 * 
+	 * @param id identificador de la factura
+	 * @return true si se elimino
 	 */
 	@Override
 	public boolean eliminar(int id) {
 		String sql = "DELETE FROM facturas WHERE id_factura=?";
-		try (Connection con = ConexionBD.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, id);
 			return ps.executeUpdate() > 0;
 		} catch (SQLException e) {
@@ -132,15 +131,15 @@ public class FacturaDAO implements GenericDAO<Factura> {
 	}
 
 	/**
-	 * Obtiene las facturas de un cliente dado su id.
-	 * @param idCliente el identificador del cliente
-	 * @return lista de facturas del cliente
+	 * Obtiene las facturas de un cliente.
+	 * 
+	 * @param idCliente identificador del cliente
+	 * @return lista de facturas
 	 */
 	public List<Factura> obtenerPorCliente(int idCliente) {
 		List<Factura> lista = new ArrayList<>();
 		String sql = "SELECT * FROM facturas WHERE id_cliente=?";
-		try (Connection con = ConexionBD.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idCliente);
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
@@ -154,15 +153,15 @@ public class FacturaDAO implements GenericDAO<Factura> {
 	}
 
 	/**
-	 * Obtiene las facturas emitidas por un veterinario.
-	 * @param idVeterinario el identificador del veterinario
-	 * @return lista de facturas del veterinario
+	 * Obtiene las facturas de un veterinario.
+	 * 
+	 * @param idVeterinario identificador del veterinario
+	 * @return lista de facturas
 	 */
 	public List<Factura> obtenerPorVeterinario(int idVeterinario) {
 		List<Factura> lista = new ArrayList<>();
 		String sql = "SELECT * FROM facturas WHERE id_veterinario=?";
-		try (Connection con = ConexionBD.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idVeterinario);
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
@@ -177,14 +176,14 @@ public class FacturaDAO implements GenericDAO<Factura> {
 
 	/**
 	 * Obtiene las facturas de un mes dado.
-	 * @param mes el número de mes (1-12)
-	 * @return lista de facturas de ese mes
+	 * 
+	 * @param mes numero de mes (1-12)
+	 * @return lista de facturas
 	 */
 	public List<Factura> obtenerPorMes(int mes) {
 		List<Factura> lista = new ArrayList<>();
 		String sql = "SELECT * FROM facturas WHERE MONTH(fecha)=?";
-		try (Connection con = ConexionBD.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, mes);
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
@@ -198,15 +197,15 @@ public class FacturaDAO implements GenericDAO<Factura> {
 	}
 
 	/**
-	 * Cuenta las facturas emitidas por un veterinario en un mes dado.
-	 * @param idVeterinario el identificador del veterinario
-	 * @param mes el número de mes (1-12)
-	 * @return número de facturas en ese mes
+	 * Cuenta las facturas de un veterinario en un mes.
+	 * 
+	 * @param idVeterinario identificador del veterinario
+	 * @param mes           numero de mes (1-12)
+	 * @return numero de facturas
 	 */
 	public int contarPorVeterinarioYMes(int idVeterinario, int mes) {
 		String sql = "SELECT COUNT(*) FROM facturas WHERE id_veterinario=? AND MONTH(fecha)=?";
-		try (Connection con = ConexionBD.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idVeterinario);
 			ps.setInt(2, mes);
 			try (ResultSet rs = ps.executeQuery()) {
@@ -221,44 +220,42 @@ public class FacturaDAO implements GenericDAO<Factura> {
 	}
 
 	/**
-	 * Obtiene el total facturado por un veterinario en un mes dado.
-	 * @param idVeterinario el identificador del veterinario
-	 * @param mes el número de mes (1-12)
-	 * @return total facturado en ese mes
+	 * Obtiene el total facturado por un veterinario en un mes.
+	 * 
+	 * @param idVeterinario identificador del veterinario
+	 * @param mes           numero de mes (1-12)
+	 * @return total facturado
 	 */
-	public BigDecimal totalPorVeterinarioYMes(int idVeterinario, int mes) {
+	public double totalPorVeterinarioYMes(int idVeterinario, int mes) {
 		String sql = "SELECT COALESCE(SUM(total), 0) FROM facturas WHERE id_veterinario=? AND MONTH(fecha)=?";
-		try (Connection con = ConexionBD.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idVeterinario);
 			ps.setInt(2, mes);
 			try (ResultSet rs = ps.executeQuery()) {
 				if (rs.next()) {
-					return rs.getBigDecimal(1);
+					return rs.getDouble(1);
 				}
 			}
 		} catch (SQLException e) {
 			System.out.println("Error sumando total por vet y mes: " + e.getMessage());
 		}
-		return BigDecimal.ZERO;
+		return 0;
 	}
 
 	/**
-	 * Convierte una fila del ResultSet en un objeto Factura.
-	 * @param rs el ResultSet posicionado en la fila actual
-	 * @return el objeto Factura mapeado
-	 * @throws SQLException si ocurre un error de acceso a datos
+	 * Mapea un ResultSet a un objeto Factura.
+	 * 
+	 * @param rs el ResultSet
+	 * @return la Factura mapeada
 	 */
 	private Factura mapear(ResultSet rs) throws SQLException {
-		Factura f = new Factura();
-		f.setIdFactura(rs.getInt("id_factura"));
-		f.setIdCliente(rs.getInt("id_cliente"));
-		f.setIdVeterinario(rs.getInt("id_veterinario"));
-		f.setIdMascota(rs.getInt("id_mascota"));
-		f.setFecha(rs.getObject("fecha", LocalDate.class));
-		f.setSubtotal(rs.getBigDecimal("subtotal"));
-		f.setTotalIva(rs.getBigDecimal("total_iva"));
-		f.setTotal(rs.getBigDecimal("total"));
-		return f;
+		return new Factura(rs.getInt("id_factura"), 
+				rs.getInt("id_cliente"),
+				rs.getInt("id_veterinario"),
+				rs.getInt("id_mascota"), 
+				rs.getString("fecha"), 
+				rs.getDouble("subtotal"), 
+				rs.getDouble("total_iva"),
+				rs.getDouble("total"));
 	}
 }
