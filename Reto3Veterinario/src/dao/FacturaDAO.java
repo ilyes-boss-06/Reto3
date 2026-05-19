@@ -249,8 +249,13 @@ public class FacturaDAO implements GenericDAO<Factura> {
 	 * @return la Factura mapeada
 	 */
 	private Factura mapear(ResultSet rs) throws SQLException {
-		return new Factura(rs.getInt("id_factura"), rs.getInt("id_cliente"), rs.getInt("id_veterinario"),
-				rs.getInt("id_mascota"), rs.getString("fecha"), rs.getDouble("subtotal"), rs.getDouble("total_iva"),
+		return new Factura(rs.getInt("id_factura"), 
+				rs.getInt("id_cliente"),
+				rs.getInt("id_veterinario"),
+				rs.getInt("id_mascota"), 
+				rs.getString("fecha"), 
+				rs.getDouble("subtotal"), 
+				rs.getDouble("total_iva"),
 				rs.getDouble("total"));
 	}
 }

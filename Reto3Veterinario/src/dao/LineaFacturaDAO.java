@@ -148,8 +148,12 @@ public class LineaFacturaDAO implements GenericDAO<LineaFactura> {
 	 * @return la LineaFactura mapeada
 	 */
 	private LineaFactura mapear(ResultSet rs) throws SQLException {
-		return new LineaFactura(rs.getInt("id_linea_factura"), rs.getInt("id_factura"), rs.getInt("id_tratamiento"),
-				rs.getString("fecha"), rs.getInt("cantidad"), rs.getDouble("precio_tratamiento"),
+		return new LineaFactura (rs.getInt("id_linea_factura"), 
+				rs.getInt("id_factura"),
+				rs.getInt("id_tratamiento"),
+				rs.getString("fecha"),
+				rs.getInt("cantidad"), 
+				rs.getDouble("precio_tratamiento"),
 				rs.getDouble("importe"));
 	}
 }
