@@ -17,7 +17,6 @@ public class Main2 {
     static FacturaDAO facturaDAO = new FacturaDAO();
     static LineaFacturaDAO lineaFacturaDAO = new LineaFacturaDAO();
  
-
     // 3. Muestra todas las mascotas, selecciona una y muestra su historial
     public static void ejercicio3(Scanner sc) {
         System.out.println("MASCOTAS Y SU HISTORIAL");
