@@ -1,40 +1,43 @@
 package dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-
 import modelo.Cliente;
 import util.ConexionBD;
 
-public class ClienteDAO implements GenericDAO<Cliente>{
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ClienteDAO implements GenericDAO<Cliente> {
 
 	/**
-	 * Inserta un nuevo cliente en la tabla clientes.
-	 * @param objeto el cliente a insertar (debe tener idPersona asignado)
-	 * @return true si se insertó correctamente
+	 * Inserta un cliente. Primero inserta en personas y luego en clientes.
+	 * @param objeto el cliente a insertar
+	 * @return true si se inserto correctamente
 	 */
 	@Override
 	public boolean insertar(Cliente objeto) {
-		String sql = "INSERT INTO clientes(id_persona, telefono) VALUES(?,?)";
-		try (Connection con = ConexionBD.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-			ps.setInt(1, objeto.getIdPersona());
-			ps.setString(2, objeto.getTenefono());
-			int filas = ps.executeUpdate();
-			if (filas > 0) {
-				try (ResultSet rs = ps.getGeneratedKeys()) {
-					if (rs.next()) {
-						objeto.setIdCliente(rs.getInt(1));
-						return true;
-					}
-				}
+		String sqlPersona = "INSERT INTO personas(dni, nombre) VALUES(?,?)";
+		String sqlCliente = "INSERT INTO clientes(id_persona, telefono) VALUES(?,?)";
+		try (Connection con = ConexionBD.getConnection()) {
+			con.setAutoCommit(false);
+			PreparedStatement psP = con.prepareStatement(sqlPersona, Statement.RETURN_GENERATED_KEYS);
+			psP.setString(1, objeto.getDni());
+			psP.setString(2, objeto.getNombre());
+			psP.executeUpdate();
+			ResultSet rs = psP.getGeneratedKeys();
+			if (rs.next()) {
+				objeto.setIdPersona(rs.getInt(1));
 			}
-			return false;
+			PreparedStatement psC = con.prepareStatement(sqlCliente, Statement.RETURN_GENERATED_KEYS);
+			psC.setInt(1, objeto.getIdPersona());
+			psC.setString(2, objeto.getTelefono());
+			psC.executeUpdate();
+			ResultSet rs2 = psC.getGeneratedKeys();
+			if (rs2.next()) {
+				objeto.setIdCliente(rs2.getInt(1));
+			}
+			con.commit();
+			return true;
 		} catch (SQLException e) {
 			System.out.println("Error insertando cliente: " + e.getMessage());
 			return false;
@@ -42,8 +45,8 @@ public class ClienteDAO implements GenericDAO<Cliente>{
 	}
 
 	/**
-	 * Obtiene todos los clientes con sus datos de persona mediante INNER JOIN.
-	 * @return lista con todos los clientes
+	 * Obtiene todos los clientes con JOIN a personas.
+	 * @return lista de clientes
 	 */
 	@Override
 	public List<Cliente> obtenerTodos() {
@@ -63,9 +66,9 @@ public class ClienteDAO implements GenericDAO<Cliente>{
 	}
 
 	/**
-	 * Obtiene un cliente por su id_cliente.
-	 * @param id el identificador del cliente
-	 * @return el cliente encontrado o null si no existe
+	 * Obtiene un cliente por su id.
+	 * @param id identificador del cliente
+	 * @return el cliente o null
 	 */
 	@Override
 	public Cliente obtenerPorId(int id) {
@@ -87,16 +90,16 @@ public class ClienteDAO implements GenericDAO<Cliente>{
 	}
 
 	/**
-	 * Actualiza el teléfono de un cliente existente.
-	 * @param objeto el cliente con los datos actualizados
-	 * @return true si se actualizó correctamente
+	 * Actualiza el telefono de un cliente.
+	 * @param objeto el cliente con datos actualizados
+	 * @return true si se actualizo
 	 */
 	@Override
 	public boolean actualizar(Cliente objeto) {
 		String sql = "UPDATE clientes SET telefono=? WHERE id_cliente=?";
 		try (Connection con = ConexionBD.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql)) {
-			ps.setString(1, objeto.getTenefono());
+			ps.setString(1, objeto.getTelefono());
 			ps.setInt(2, objeto.getIdCliente());
 			return ps.executeUpdate() > 0;
 		} catch (SQLException e) {
@@ -106,9 +109,9 @@ public class ClienteDAO implements GenericDAO<Cliente>{
 	}
 
 	/**
-	 * Elimina un cliente por su id_cliente.
-	 * @param id el identificador del cliente a eliminar
-	 * @return true si se eliminó correctamente
+	 * Elimina un cliente por su id.
+	 * @param id identificador del cliente
+	 * @return true si se elimino
 	 */
 	@Override
 	public boolean eliminar(int id) {
@@ -122,20 +125,19 @@ public class ClienteDAO implements GenericDAO<Cliente>{
 			return false;
 		}
 	}
+
 	/**
-	 * Convierte una fila del ResultSet en un objeto Cliente.
-	 * @param rs el ResultSet posicionado en la fila actual
-	 * @return el objeto Cliente mapeado
-	 * @throws SQLException si ocurre un error de acceso a datos
+	 * Mapea un ResultSet a un objeto Cliente.
+	 * @param rs el ResultSet
+	 * @return el Cliente mapeado
 	 */
 	private Cliente mapear(ResultSet rs) throws SQLException {
-		Cliente c = new Cliente();
-		c.setIdCliente(rs.getInt("id_cliente"));
-		c.setIdPersona(rs.getInt("id_persona"));
-		c.setDni(rs.getString("dni"));
-		c.setNombre(rs.getString("nombre"));
-		c.setTenefono(rs.getString("telefono"));
-		return c;
+		return new Cliente(
+				rs.getInt("id_cliente"),
+				rs.getInt("id_persona"),
+				rs.getString("dni"),
+				rs.getString("nombre"),
+				rs.getString("telefono")
+		);
 	}
-
 }

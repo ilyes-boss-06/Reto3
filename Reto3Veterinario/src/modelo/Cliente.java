@@ -1,65 +1,64 @@
 package modelo;
 
-public class Cliente extends Persona {
+import java.io.Serializable;
+
+public class Cliente extends Persona implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private int idCliente;
-	private int idPersona;
-	private String tenefono;
+	private String telefono;
+
+	public Cliente() {
+	}
+
 	/**
 	 * Constructor con todos los campos.
 	 * @param idCliente identificador del cliente
-	 * @param idPersona identificador de la persona asociada
-	 * @param dni DNI del cliente
-	 * @param nombre nombre completo del cliente
-	 * @param telefono teléfono de contacto
+	 * @param idPersona identificador de la persona
+	 * @param dni DNI
+	 * @param nombre nombre completo
+	 * @param telefono telefono de contacto
 	 */
-	public Cliente(int idPersona, String dni, String nombre, int idCliente, int idPersona2, String tenefono) {
+	public Cliente(int idCliente, int idPersona, String dni, String nombre, String telefono) {
 		super(idPersona, dni, nombre);
 		this.idCliente = idCliente;
-		idPersona = idPersona2;
-		this.tenefono = tenefono;
+		this.telefono = telefono;
 	}
+
 	/**
-	 * Constructor sin ids (para INSERT).
-	 * @param dni DNI del cliente
-	 * @param nombre nombre completo del cliente
-	 * @param telefono teléfono de contacto
+	 * Constructor sin ids.
+	 * @param dni DNI
+	 * @param nombre nombre completo
+	 * @param telefono telefono de contacto
 	 */
-	public Cliente(String dni, String nombre, int idPersona2, String tenefono) {
+	public Cliente(String dni, String nombre, String telefono) {
 		super(dni, nombre);
-		idPersona = idPersona2;
-		this.tenefono = tenefono;
+		this.telefono = telefono;
 	}
-	/**
-	 * Constructor vacío.
-	 */
-	public Cliente() {
-		super();
-	}
+
+	
+
 	public int getIdCliente() {
 		return idCliente;
 	}
+
 	public void setIdCliente(int idCliente) {
 		this.idCliente = idCliente;
 	}
-	public int getIdPersona() {
-		return idPersona;
+
+	public String getTelefono() {
+		return telefono;
 	}
-	public void setIdPersona(int idPersona) {
-		this.idPersona = idPersona;
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
 	}
-	public String getTenefono() {
-		return tenefono;
-	}
-	public void setTenefono(String tenefono) {
-		this.tenefono = tenefono;
-	}
+
+
 	@Override
 	public String toString() {
-		return "Cliente [idCliente=" + idCliente + ", idPersona=" + idPersona + ", tenefono=" + tenefono
-				+ ", toString()=" + super.toString() + "]";
+		return "Cliente{idCliente=" + idCliente + ", dni='" + getDni() + "', nombre='" + getNombre()
+				+ "', telefono='" + telefono + "'}";
 	}
-	
-	
 }
+

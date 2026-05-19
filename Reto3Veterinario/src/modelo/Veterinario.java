@@ -2,7 +2,7 @@ package modelo;
 
 import java.io.Serializable;
 
-public class Veterinario extends Persona {
+public class Veterinario extends Persona implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
