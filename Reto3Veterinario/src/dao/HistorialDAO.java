@@ -210,7 +210,11 @@ public class HistorialDAO implements GenericDAO<Historial> {
 	 */
 	
 	private Historial mapear(ResultSet rs) throws SQLException {
-		return new Historial(rs.getInt("id_historial"), rs.getInt("id_mascota"), rs.getInt("id_tratamiento"),
-				rs.getInt("id_veterinario"), rs.getString("fecha"));
+		return new Historial(
+				rs.getInt("id_historial"),
+				rs.getInt("id_mascota"),
+				rs.getInt("id_tratamiento"),
+				rs.getInt("id_veterinario"),
+				rs.getString("fecha"));
 	}
 }

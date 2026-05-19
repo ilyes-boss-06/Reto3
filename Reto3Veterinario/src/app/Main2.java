@@ -3,6 +3,7 @@ package app;
 import dao.*;
 import modelo.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Scanner;
 
@@ -19,7 +20,7 @@ public class Main2 {
 	// 3. Muestra todas las mascotas, selecciona una y muestra su historial
 	
 	public static void ejercicio3(Scanner sc) {
-		System.out.println("\n3. MASCOTAS Y SU HISTORIAL");
+		System.out.println("MASCOTAS Y SU HISTORIAL");
 		for (Mascota m : mascotaDAO.obtenerTodos()) {
 			System.out.println(m);
 		}
@@ -39,7 +40,7 @@ public class Main2 {
 	// 4. Muestra una factura por id junto con todas sus lineas
 	
 	public static void ejercicio4(Scanner sc) {
-		System.out.println("\n4. FACTURA POR ID CON LINEAS");
+		System.out.println("FACTURA POR ID CON LINEAS");
 		System.out.print("Introduce id de factura: ");
 		int idFactura = sc.nextInt();
 		sc.nextLine();
@@ -56,4 +57,43 @@ public class Main2 {
 			System.out.println("Factura no encontrada.");
 		}
 	}
+	
+	// 9. Selecciona un tratamiento y muestra su precio y veces en historial
+	
+	public static void ejercicio9(Scanner sc) {
+		System.out.println("DETALLE DE TRATAMIENTO");
+		for (Tratamiento t : tratamientoDAO.obtenerTodos()) {
+			System.out.println(t);
+		}
+		System.out.print("Selecciona id de tratamiento: ");
+		int idTratamiento = sc.nextInt();
+		sc.nextLine();
+		Tratamiento tratamiento = tratamientoDAO.obtenerPorId(idTratamiento);
+		if (tratamiento != null) {
+			int veces = tratamientoDAO.contarEnHistorial(idTratamiento);
+			System.out.println("Tratamiento: " + tratamiento.getNombre() + " | Precio: " + tratamiento.getPrecio()
+					+ " | Apariciones en historial: " + veces);
+		}
+	}
+	
+	// 10. Facturas por mes y total facturado
+	
+	public static void ejercicio10(Scanner sc) {
+		System.out.println("FACTURAS POR MES");
+		for (Factura f : facturaDAO.obtenerTodos()) {
+			System.out.println(f);
+		}
+		System.out.print("Introduce numero de mes (1-12): ");
+		int mes = sc.nextInt();
+		sc.nextLine();
+		List<Factura> facturasMes = facturaDAO.obtenerPorMes(mes);
+		BigDecimal totalMes = BigDecimal.ZERO;
+		for (Factura f : facturasMes) {
+			System.out.println("  " + f);
+			totalMes = totalMes.add(f.getTotal());
+		}
+		System.out.println("Total facturado en mes " + mes + ": " + totalMes);
+	}
+	
+	
 }

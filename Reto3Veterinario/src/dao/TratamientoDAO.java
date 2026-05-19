@@ -137,6 +137,10 @@ public class TratamientoDAO implements GenericDAO<Tratamiento> {
 	 * @return el Tratamiento mapeado
 	 */
 	private Tratamiento mapear(ResultSet rs) throws SQLException {
-		return new Tratamiento(rs.getInt("id_tratamiento"), rs.getString("nombre"), rs.getDouble("precio"));
+		return new Tratamiento(
+				rs.getInt("id_tratamiento"),
+				rs.getString("nombre"),
+				rs.getDouble("precio")
+			);
 	}
 }
