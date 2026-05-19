@@ -3,10 +3,11 @@ package app;
 import dao.*;
 import modelo.*;
 
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main3 {
+	
+	
 
 	static ClienteDAO clienteDAO = new ClienteDAO();
 	static VeterinarioDAO veterinarioDAO = new VeterinarioDAO();
@@ -16,6 +17,10 @@ public class Main3 {
 	static FacturaDAO facturaDAO = new FacturaDAO();
 	static LineaFacturaDAO lineaFacturaDAO = new LineaFacturaDAO();
 
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		ejercicio17(sc);	}
+	
 	// 5. Selecciona un cliente y muestra sus datos, mascotas y facturas
 	public static void ejercicio5(Scanner sc) {
 		System.out.println("\n5. CLIENTE COMPLETO: DATOS + MASCOTAS + FACTURAS");
