@@ -31,9 +31,8 @@ public class Veterinario extends Persona {
 	 * @param nombre nombre completo del veterinario
 	 * @param numColegiado número de colegiado
 	 */
-	public Veterinario(String dni, String nombre, int idPersona2, String numColegiado) {
+	public Veterinario(String dni, String nombre, String numColegiado) {
 		super(dni, nombre);
-		idPersona = idPersona2;
 		this.numColegiado = numColegiado;
 	}
 	/**
