@@ -1,8 +1,6 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 
 public class LineaFactura implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -10,29 +8,27 @@ public class LineaFactura implements Serializable {
 	private int idLineaFactura;
 	private int idFactura;
 	private int idTratamiento;
-	private LocalDate fecha;
+	private String fecha;
 	private int cantidad;
-	private BigDecimal precioTratamiento;
-	private BigDecimal importe;
+	private double precioTratamiento;
+	private double importe;
 
-	/**
-	 * Constructor vacío.
-	 */
 	public LineaFactura() {
 	}
 
 	/**
 	 * Constructor con todos los campos.
-	 * @param idLineaFactura identificador de la línea
-	 * @param idFactura identificador de la factura
-	 * @param idTratamiento identificador del tratamiento
-	 * @param fecha fecha de la línea
-	 * @param cantidad cantidad de unidades
-	 * @param precioTratamiento precio unitario del tratamiento
-	 * @param importe importe total de la línea
+	 * 
+	 * @param idLineaFactura    identificador de la linea
+	 * @param idFactura         identificador de la factura
+	 * @param idTratamiento     identificador del tratamiento
+	 * @param fecha             fecha de la linea
+	 * @param cantidad          cantidad de unidades
+	 * @param precioTratamiento precio unitario
+	 * @param importe           importe total de la linea
 	 */
-	public LineaFactura(int idLineaFactura, int idFactura, int idTratamiento,
-			LocalDate fecha, int cantidad, BigDecimal precioTratamiento, BigDecimal importe) {
+	public LineaFactura(int idLineaFactura, int idFactura, int idTratamiento, String fecha, int cantidad,
+			double precioTratamiento, double importe) {
 		this.idLineaFactura = idLineaFactura;
 		this.idFactura = idFactura;
 		this.idTratamiento = idTratamiento;
@@ -43,16 +39,17 @@ public class LineaFactura implements Serializable {
 	}
 
 	/**
-	 * Constructor sin id (para INSERT).
-	 * @param idFactura identificador de la factura
-	 * @param idTratamiento identificador del tratamiento
-	 * @param fecha fecha de la línea
-	 * @param cantidad cantidad de unidades
-	 * @param precioTratamiento precio unitario del tratamiento
-	 * @param importe importe total de la línea
+	 * Constructor sin id.
+	 * 
+	 * @param idFactura         identificador de la factura
+	 * @param idTratamiento     identificador del tratamiento
+	 * @param fecha             fecha de la linea
+	 * @param cantidad          cantidad de unidades
+	 * @param precioTratamiento precio unitario
+	 * @param importe           importe total de la linea
 	 */
-	public LineaFactura(int idFactura, int idTratamiento, LocalDate fecha,
-			int cantidad, BigDecimal precioTratamiento, BigDecimal importe) {
+	public LineaFactura(int idFactura, int idTratamiento, String fecha, int cantidad, double precioTratamiento,
+			double importe) {
 		this.idFactura = idFactura;
 		this.idTratamiento = idTratamiento;
 		this.fecha = fecha;
@@ -85,11 +82,11 @@ public class LineaFactura implements Serializable {
 		this.idTratamiento = idTratamiento;
 	}
 
-	public LocalDate getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(LocalDate fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 
@@ -101,26 +98,26 @@ public class LineaFactura implements Serializable {
 		this.cantidad = cantidad;
 	}
 
-	public BigDecimal getPrecioTratamiento() {
+	public double getPrecioTratamiento() {
 		return precioTratamiento;
 	}
 
-	public void setPrecioTratamiento(BigDecimal precioTratamiento) {
+	public void setPrecioTratamiento(double precioTratamiento) {
 		this.precioTratamiento = precioTratamiento;
 	}
 
-	public BigDecimal getImporte() {
+	public double getImporte() {
 		return importe;
 	}
 
-	public void setImporte(BigDecimal importe) {
+	public void setImporte(double importe) {
 		this.importe = importe;
 	}
 
 	@Override
 	public String toString() {
-		return "LineaFactura{idLineaFactura=" + idLineaFactura + ", idFactura=" + idFactura
-				+ ", idTratamiento=" + idTratamiento + ", fecha=" + fecha + ", cantidad=" + cantidad
-				+ ", precioTratamiento=" + precioTratamiento + ", importe=" + importe + "}";
+		return "LineaFactura{idLineaFactura=" + idLineaFactura + ", idFactura=" + idFactura + ", idTratamiento="
+				+ idTratamiento + ", fecha='" + fecha + "', cantidad=" + cantidad + ", precioTratamiento="
+				+ precioTratamiento + ", importe=" + importe + "}";
 	}
 }
